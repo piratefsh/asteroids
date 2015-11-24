@@ -1,7 +1,10 @@
 import Keyboarder from './Keyboarder'
+import Base from './Base'
 
-export default class Player{
+export default class Player extends Base{
     constructor(game, gameSize){
+        super()
+        
         this.game = game
         this.size = {
             x: 15,
@@ -28,9 +31,6 @@ export default class Player{
         }
     }
 
-    drawBody(screen, body){
-        screen.fillRect(body.center.x - body.size.x/2,
-            body.center.y - body.size.y/2, body.size.x, body.size.y)
-    }
+    
 
 }

@@ -1,3 +1,4 @@
+import Invader from './Invader';
 import Player from './Player';
 import Keyboarder from './Keyboarder';
 
@@ -13,6 +14,8 @@ export default class Game{
         };
 
         this.bodies = [new Player(this.screen, this.gameSize)];
+
+        this.bodies.push(...this.createInvaders())
     }
 
     tick() {
@@ -36,5 +39,16 @@ export default class Game{
             body.draw(gameSize);
         }
 
+    }
+
+    createInvaders(){
+        const invaders = []
+        for(let i = 0; i < 24; i++){
+            const x = 30 + i % 8 * 30
+            const y = 30 + i % 3 * 30
+            invaders.push(new Invader(this.screen, {x: x, y: y}))
+        }
+
+        return invaders
     }
 }
