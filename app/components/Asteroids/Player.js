@@ -17,7 +17,7 @@ export default class Player extends Base{
             y: gameSize.y / 2,
         };
 
-        this.rotation = 0;
+        this.rotation = Math.PI;
         this.geo = new Geometry()
         this.keyboarder = new Keyboarder();
     }
