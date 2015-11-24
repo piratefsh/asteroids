@@ -28,12 +28,23 @@ export default class Game{
     }
 
     update() {
-        this.bodies = this.bodies
-            .filter((b) => {
+        const bodies = this.bodies
+            .reduce((bodies, b) => {
                 const notDead = !(('die' in b) && b.die())
                 const notCollided = this.notColliding(b) 
-                return notDead && notCollided
-            });
+                bodies[(notDead && notCollided) ? 'alive' : 'dead'].push(b);
+                return bodies;
+            },{alive: [], dead: []});
+
+        this.bodies = bodies.alive;
+
+        bodies.dead.forEach((b) => {
+            console.log(b);
+            if (b instanceof Asteroid && b.scale > 0) {
+                var a = this.spawnAsteroids(b)
+                this.bodies.push(...a);
+            }
+        });
 
         for (let body of this.bodies) {
             body.update();
@@ -89,15 +100,23 @@ export default class Game{
     createAsteroids() {
         const asteroids = [
             new Asteroid(this, {x: 0, y: 0}),
-            new Asteroid(this, {x: 0, y: this.gameSize.y/2}),
-            new Asteroid(this, {x: 0, y: this.gameSize.y}),
-            new Asteroid(this, {x: this.gameSize.x/2, y: 0}),
-            new Asteroid(this, {x: this.gameSize.x/2, y: this.gameSize.y}),
+            // new Asteroid(this, {x: 0, y: this.gameSize.y/2}),
+            // new Asteroid(this, {x: 0, y: this.gameSize.y}),
+            // new Asteroid(this, {x: this.gameSize.x/2, y: 0}),
+            // new Asteroid(this, {x: this.gameSize.x/2, y: this.gameSize.y}),
             new Asteroid(this, {x: this.gameSize.x, y: 0}),
-            new Asteroid(this, {x: this.gameSize.x, y: this.gameSize.y/2}),
+            // new Asteroid(this, {x: this.gameSize.x, y: this.gameSize.y/2}),
             new Asteroid(this, {x: this.gameSize.x, y: this.gameSize.y}),
         ]
         return asteroids
+    }
+
+    spawnAsteroids(asteroid) {
+        return[
+            new Asteroid(this, {x:asteroid.center.x, y:asteroid.center.y}, asteroid.scale - 1),
+            new Asteroid(this, {x:asteroid.center.x, y:asteroid.center.y}, asteroid.scale - 1),
+            new Asteroid(this, {x:asteroid.center.x, y:asteroid.center.y}, asteroid.scale - 1)
+        ]
     }
 
     hasMaxBullets(){

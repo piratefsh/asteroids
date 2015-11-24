@@ -2,16 +2,17 @@ import Base from '../Shared/Base'
 import Bullet from '../Shared/Bullet'
 import Geometry from '../Shared/Geometry'
 export default class Asteroids extends Base{
-    constructor(game, center) {
+    constructor(game, center, scale=3) {
         super()
         this.game = game;
 
         this.SIZES = [10, 30, 50, 80]
-        const size = this.SIZES[Math.floor(Math.random() * 10) % this.SIZES.length]
-        
+        this.scale = scale
+        const size = this.SIZES[this.scale]
         this.size = {x:size, y: size};
+
         this.center = center;
-        this.speed = {x: 0, y: Math.random() * 2 + 1};
+        this.speed = {x: 0, y: Math.random() * 2 + 0.5};
 
         this.rotation = Math.random() * Math.PI * 2
 
