@@ -12,7 +12,8 @@ export default class Invader extends Base{
     }
 
     update() {
-        if(this.patrolX < 0 || this.patrolX > this.game.gameSize.x){
+        if(this.patrolX < 0 
+            || this.patrolX > 60){
             this.speedX *= -1
         }
 
