@@ -36,6 +36,9 @@ export default class Game{
 
         for (let body of this.bodies) {
             body.update();
+            body.center.x = (body.center.x + this.gameSize.x) % this.gameSize.x
+            body.center.y = (body.center.y + this.gameSize.y) % this.gameSize.y
+
         }
 
     }
