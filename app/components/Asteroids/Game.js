@@ -1,6 +1,7 @@
 import Player from './Player';
 import Keyboarder from '../Shared/Keyboarder';
 import Bullet from '../Shared/Bullet';
+import Asteroid from './Asteroid';
 
 export default class Game{
     constructor() {
@@ -15,6 +16,7 @@ export default class Game{
 
         this.bodies = [new Player(this, this.gameSize)];
         this.bodies.push(...this.createAsteroids());
+
     }
 
     tick() {
@@ -59,7 +61,7 @@ export default class Game{
 
     colliding(b1, b2) {
 
-        if (b1 == b2){
+        if (b1 == b2 || b1 instanceof b2.constructor){
             return false
         }
 
@@ -86,7 +88,17 @@ export default class Game{
     }
 
     createAsteroids() {
-        return []
+        const asteroids = [
+            new Asteroid(this, {x: 0, y: 0}),
+            new Asteroid(this, {x: 0, y: this.gameSize.y/2}),
+            new Asteroid(this, {x: 0, y: this.gameSize.y}),
+            new Asteroid(this, {x: this.gameSize.x/2, y: 0}),
+            new Asteroid(this, {x: this.gameSize.x/2, y: this.gameSize.y}),
+            new Asteroid(this, {x: this.gameSize.x, y: 0}),
+            new Asteroid(this, {x: this.gameSize.x, y: this.gameSize.y/2}),
+            new Asteroid(this, {x: this.gameSize.x, y: this.gameSize.y}),
+        ]
+        return asteroids
     }
 
     hasMaxBullets(){
