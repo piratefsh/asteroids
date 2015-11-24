@@ -16,10 +16,10 @@ export default class Invader extends Base{
         }
 
         this.center.x += this.speedX
-        this.patrolX = this.speedX
+        this.patrolX += this.speedX
     }
 
-    draw() {
-         this.drawBody(this.game, this)
+    draw(screen) {
+         this.drawBody(screen, this)
     }
 }

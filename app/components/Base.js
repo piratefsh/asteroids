@@ -1,5 +1,5 @@
 export default class Base{
-    constructor(){
+    constructor(screen){
     }
     drawBody(screen, body){
         screen.fillRect(body.center.x - body.size.x/2,
