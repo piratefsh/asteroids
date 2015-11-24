@@ -10,9 +10,11 @@ export default class Keyboarder{
 
 
         this.KEYS = {
+            SPACE: 32,
             LEFT: 37,
+            UP: 38,
             RIGHT: 39,
-            SPACE: 32
+            DOWN: 40
         }
     }
 

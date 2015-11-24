@@ -2,6 +2,7 @@ import Keyboarder from '../Shared/Keyboarder';
 import Base from '../Shared/Base';
 import Bullet from '../Shared/Bullet';
 import Geometry from '../Shared/Geometry';
+import util from '../Shared/Util';
 
 export default class Player extends Base{
     constructor(game, gameSize) {
@@ -20,6 +21,8 @@ export default class Player extends Base{
         this.rotation = Math.PI;
         this.geo = new Geometry()
         this.keyboarder = new Keyboarder();
+
+        this.shoot = util.throttle(this.shoot, 200)
     }
 
     draw(screen) {
@@ -60,7 +63,40 @@ export default class Player extends Base{
         screen.stroke();
     }
 
+    shoot(){
+        let center  = {
+            x: this.center.x,
+            y: this.center.y - this.size.y,
+        };
+
+        let velocity = {
+            x: 0,
+            y: -5,
+        };
+
+        let offset = {
+            x: this.center.x,
+            y: this.center.y,
+        }
+
+        center = this.geo.rotate(center, offset, this.rotation)
+        velocity = this.geo.rotate(velocity, {x:0, y:0}, this.rotation)
+
+        if(!this.game.hasMaxBullets()){
+            const b = new Bullet(center, velocity);
+            this.game.addBody(b)
+        }
+    }
+
     update() {
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
+            this.center.y -= 2
+        }
+
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.DOWN)) {
+            this.center.y += 2
+        }
+
         if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
             this.rotation = (this.rotation - 0.1)
         }
@@ -71,28 +107,7 @@ export default class Player extends Base{
         }
 
         if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE)) {
-            let center  = {
-                x: this.center.x,
-                y: this.center.y - this.size.y,
-            };
-
-            let velocity = {
-                x: 0,
-                y: -5,
-            };
-
-            let offset = {
-                x: this.center.x,
-                y: this.center.y,
-            }
-
-            center = this.geo.rotate(center, offset, this.rotation)
-            velocity = this.geo.rotate(velocity, {x:0, y:0}, this.rotation)
-
-            if(!this.game.hasMaxBullets()){
-                const b = new Bullet(center, velocity);
-                this.game.addBody(b);
-            }
+            this.shoot()
         }
     }
 
