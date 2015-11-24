@@ -1,4 +1,4 @@
-import Base from './Base'
+import Base from '../Shared/Base'
 
 export default class Bullet extends Base{
     constructor(center, velocity){

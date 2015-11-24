@@ -1,6 +1,6 @@
 import Invader from './Invader';
 import Player from './Player';
-import Keyboarder from './Keyboarder';
+import Keyboarder from '../Shared/Keyboarder';
 
 export default class Game{
     constructor() {

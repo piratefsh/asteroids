@@ -1,4 +1,4 @@
-import Base from './Base'
+import Base from '../Shared/Base'
 import Bullet from './Bullet'
 export default class Invader extends Base{
     constructor(game, center) {

@@ -1,5 +1,5 @@
-import Keyboarder from './Keyboarder'
-import Base from './Base'
+import Keyboarder from '../Shared/Keyboarder'
+import Base from '../Shared/Base'
 import Bullet from './Bullet'
 
 export default class Player extends Base{
