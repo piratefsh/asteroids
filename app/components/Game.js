@@ -84,9 +84,16 @@ export default class Game{
         for (let i = 0; i < 24; i++) {
             const x = 30 + i % 8 * 30;
             const y = 30 + i % 3 * 30;
-            invaders.push(new Invader(this.screen, {x: x, y: y}));
+            invaders.push(new Invader(this, {x: x, y: y}));
         }
 
         return invaders;
+    }
+
+    invadersBelow(invader){
+        return this.bodies.filter((b)=>{
+            return b instanceof Invader 
+                && b.center.y - b.size.y > invader.center.y - invader.size.y
+        }).length > 0
     }
 }
