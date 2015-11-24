@@ -36,14 +36,21 @@ export default class Player extends Base{
             }
         ]
 
-        const rotatedPoints = []
-        for (let point of points){
-            const r = this.geo.rotate(point,  {
-                x: this.center.x,
-                y: this.center.y,
-            }, this.rotation)
-            rotatedPoints.push(r)
+        const offset = {
+            x: this.center.x,
+            y: this.center.y
         }
+
+        for (let point of points){
+            const rotated = this.geo.rotate(point, offset, this.rotation)
+            if (window.foo) {
+                console.log(point, offset, rotated)
+                debugger;
+            }
+            point.x = rotated.x
+            point.y = rotated.y
+        }
+
 
         screen.beginPath();
         screen.moveTo(points[0].x, points[0].y);
