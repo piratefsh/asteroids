@@ -1,5 +1,6 @@
 import Player from './Player';
 import Keyboarder from '../Shared/Keyboarder';
+import Bullet from '../Shared/Bullet';
 
 export default class Game{
     constructor() {
@@ -25,9 +26,11 @@ export default class Game{
     }
 
     update() {
-
         this.bodies = this.bodies
-            .filter((b) => this.notColliding(b));
+            .filter((b) => {
+                return this.notColliding(b) &&
+                !((b instanceof Bullet) && (b.center.x < 0 || b.center.y < 0))
+            });
 
         for (let body of this.bodies) {
             body.update();

@@ -1,53 +1,91 @@
-import Keyboarder from '../Shared/Keyboarder'
-import Base from '../Shared/Base'
-import Bullet from './Bullet'
+import Keyboarder from '../Shared/Keyboarder';
+import Base from '../Shared/Base';
+import Bullet from '../Shared/Bullet';
+import Geometry from '../Shared/Geometry';
 
 export default class Player extends Base{
-    constructor(game, gameSize){
-        super()
+    constructor(game, gameSize) {
+        super();
 
-        this.game = game
+        this.game = game;
         this.size = {
             x: 15,
-            y: 15
-        }
+            y: 20,
+        };
         this.center = {
-            x: gameSize.x/2,
-            y: gameSize.y/2
-        }
+            x: gameSize.x / 2,
+            y: gameSize.y / 2,
+        };
 
-        this.rotation = 0
-
-        this.keyboarder = new Keyboarder()
+        this.rotation = 0;
+        this.geo = new Geometry()
+        this.keyboarder = new Keyboarder();
     }
 
-    draw(screen){
-        this.drawBody(screen, this)
-    }
+    draw(screen) {
 
-    update(){
-        if(this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)){
-            this.rotation -= 2
-        }
-        if(this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)){
-            this.rotation += 2
-        }
-        if(this.keyboarder.isDown(this.keyboarder.KEYS.SPACE)){
-            const center  = {
-                x: this.center.x, 
-                y: this.center.y - this.size.x
+        const points = [
+            {   x: this.center.x - this.size.x / 2,
+                y: this.center.y + this.size.y / 2
+            },
+            {   x: this.center.x + this.size.x / 2, 
+                y: this.center.y + this.size.y / 2
+            },
+            {   x: this.center.x,
+                y: this.center.y - this.size.y / 2
             }
-            
-            const velocity = {
+        ]
+
+        const rotatedPoints = []
+        for (let point of points){
+            const r = this.geo.rotate(point,  {
+                x: this.center.x,
+                y: this.center.y,
+            }, this.rotation)
+            rotatedPoints.push(r)
+        }
+
+        screen.beginPath();
+        screen.moveTo(points[0].x, points[0].y);
+        screen.lineTo(points[1].x, points[1].y);
+        screen.lineTo(points[2].x, points[2].y);
+        screen.closePath();
+        screen.stroke();
+    }
+
+    update() {
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
+            this.rotation = (this.rotation - 0.1)
+        }
+
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
+            this.rotation = (this.rotation + 0.1)
+
+        }
+
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE)) {
+            let center  = {
+                x: this.center.x,
+                y: this.center.y - this.size.y,
+            };
+
+            let velocity = {
                 x: 0,
-                y: -5
+                y: 1,
+            };
+
+            let offset = {
+                x: this.center.x,
+                y: this.center.y,
             }
 
-            const b = new Bullet(center, velocity)
-            this.game.addBody(b)
+            center = this.geo.rotate(center, offset, this.rotation)
+            velocity = this.geo.rotate(velocity, offset, this.rotation)
+
+
+            const b = new Bullet(center, velocity);
+            this.game.addBody(b);
         }
     }
-
-    
 
 }
