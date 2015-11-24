@@ -1,3 +1,5 @@
-import test from './test'
+import Game from 'components/Game'
 import 'styles/style.scss' 
-test()
+
+const game = new Game()
+game.tick()
