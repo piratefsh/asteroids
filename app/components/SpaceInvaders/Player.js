@@ -1,6 +1,6 @@
 import Keyboarder from '../Shared/Keyboarder'
 import Base from '../Shared/Base'
-import Bullet from './Bullet'
+import Bullet from '../Shared/Bullet'
 
 export default class Player extends Base{
     constructor(game, gameSize){
