@@ -30,10 +30,9 @@ export default class Game{
     update() {
         this.bodies = this.bodies
             .filter((b) => {
-                return this.notColliding(b) &&
-                !((b instanceof Bullet) && (b.center.x < 0 || b.center.y < 0 
-                    || b.center.x > this.gameSize.x
-                    || b.center.y > this.gameSize.y))
+                const notDead = !(('die' in b) && b.die())
+                const notCollided = this.notColliding(b) 
+                return notDead && notCollided
             });
 
         for (let body of this.bodies) {

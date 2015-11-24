@@ -6,7 +6,7 @@ export default class Asteroids extends Base{
         super()
         this.game = game;
 
-        this.SIZES = [10, 30, 50, 100]
+        this.SIZES = [10, 30, 50, 80]
         const size = this.SIZES[Math.floor(Math.random() * 10) % this.SIZES.length]
         
         this.size = {x:size, y: size};
@@ -14,7 +14,6 @@ export default class Asteroids extends Base{
         this.speed = {x: 0, y: Math.random() * 2 + 1};
 
         this.rotation = Math.random() * Math.PI * 2
-        console.log(this.rotation)
 
         this.geo = new Geometry()
 
