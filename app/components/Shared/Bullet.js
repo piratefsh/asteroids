@@ -1,7 +1,7 @@
 import Base from '../Shared/Base'
 
 export default class Bullet extends Base{
-    constructor(center, velocity, rotation){
+    constructor(center, velocity){
         super()
         this.center = center 
         this.velocity = velocity
@@ -9,7 +9,6 @@ export default class Bullet extends Base{
             x: 2,
             y: 2
         }
-        this.rotation = rotation
     }
     update(){
         this.center.x += this.velocity.x

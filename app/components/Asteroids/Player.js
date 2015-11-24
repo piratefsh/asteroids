@@ -78,7 +78,7 @@ export default class Player extends Base{
 
             let velocity = {
                 x: 0,
-                y: 1,
+                y: -5,
             };
 
             let offset = {
@@ -87,11 +87,12 @@ export default class Player extends Base{
             }
 
             center = this.geo.rotate(center, offset, this.rotation)
-            velocity = this.geo.rotate(velocity, offset, this.rotation)
+            velocity = this.geo.rotate(velocity, {x:0, y:0}, this.rotation)
 
-
-            const b = new Bullet(center, velocity);
-            this.game.addBody(b);
+            if(!this.game.hasMaxBullets()){
+                const b = new Bullet(center, velocity);
+                this.game.addBody(b);
+            }
         }
     }
 

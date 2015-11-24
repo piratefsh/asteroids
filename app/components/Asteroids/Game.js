@@ -29,7 +29,9 @@ export default class Game{
         this.bodies = this.bodies
             .filter((b) => {
                 return this.notColliding(b) &&
-                !((b instanceof Bullet) && (b.center.x < 0 || b.center.y < 0))
+                !((b instanceof Bullet) && (b.center.x < 0 || b.center.y < 0 
+                    || b.center.x > this.gameSize.x
+                    || b.center.y > this.gameSize.y))
             });
 
         for (let body of this.bodies) {
@@ -82,6 +84,12 @@ export default class Game{
 
     createAsteroids() {
         return []
+    }
+
+    hasMaxBullets(){
+        return this.bodies.filter((b) => {
+            return b instanceof Bullet
+        }).length > 5
     }
 
 }
